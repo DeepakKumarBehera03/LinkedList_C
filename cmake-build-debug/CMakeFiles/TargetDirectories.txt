@@ -1,0 +1,3 @@
+/Users/deepak_behera.2003/CLionProjects/DSA_USING_C/cmake-build-debug/CMakeFiles/DSA_USING_C.dir
+/Users/deepak_behera.2003/CLionProjects/DSA_USING_C/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/deepak_behera.2003/CLionProjects/DSA_USING_C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
