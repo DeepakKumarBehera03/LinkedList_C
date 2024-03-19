@@ -3,7 +3,9 @@
 
 void create();
 void display();
-
+void insertAtBeginning();
+void insertAtEnd();
+void insertAtAny();
 struct node{
     int data;
     struct node *next;
@@ -14,7 +16,10 @@ int main() {
     while (1){
         printf("\n1.Create() .");
         printf("\n2.display() .");
-        printf("\n3.Exit from creating node .");
+        printf("\n3.insert at beginning .");
+        printf("\n4.insert at any position .");
+        printf("\n5.insert at end .");
+        printf("\n6.Exit from creating node .");
         printf("\nEnter your choice : ");
         scanf("%d", &choice);
         switch (choice) {
@@ -25,6 +30,15 @@ int main() {
                 display();
                 break;
             case 3:
+                insertAtBeginning();
+                break;
+            case 4:
+                insertAtAny();
+                break;
+            case 5:
+                insertAtEnd();
+                break;
+            case 6:
                 exit(0);
             default:
                 printf("Invalid input .");
@@ -61,4 +75,57 @@ void display(){
         printf("%d, ", ptr->data);
         ptr = ptr->next;
     }
+}
+void insertAtBeginning(){
+    struct node *temp, *ptr;
+    temp = (struct node *) malloc(sizeof(struct node));
+    if (temp == NULL){
+        printf("UNDERFLOW");
+        return;
+    }
+    printf("Enter the value for new node : ");
+    scanf("%d", &temp->data);
+    if (start == NULL){
+        temp->next = NULL;
+        start = temp;
+    }
+    else{
+        temp->next = start;
+        start = temp;
+    }
+}
+void insertAtEnd(){
+    struct node *temp, *ptr;
+    temp = (struct node *) malloc(sizeof(struct node));
+    if (temp == NULL){
+        printf("UNDERFLOW");
+        return;
+    }
+    printf("Enter the value for new node : ");
+    scanf("%d", &temp->data);
+    ptr = start;
+    while (ptr->next != NULL){
+        ptr = ptr->next;
+    }
+    ptr->next = temp;
+}
+void insertAtAny(){
+    struct node *newNode, *ptr, *preptr;
+    newNode = (struct node*) malloc(sizeof(struct node));
+    if (newNode == NULL){
+        printf("UNDERFLOW");
+        return;
+    }
+    printf("Enter the value for new node : ");
+    scanf("%d", &newNode->data);
+    int data;
+    printf("Enter the data at which you want to insert the value : ");
+    scanf("%d", &data);
+    ptr = start;
+    while (ptr->data != data){
+        preptr = ptr;
+        ptr = ptr->next;
+    }
+    newNode->next = preptr->next;
+    preptr->next = newNode;
 }
