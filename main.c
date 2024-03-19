@@ -6,6 +6,9 @@ void display();
 void insertAtBeginning();
 void insertAtEnd();
 void insertAtAny();
+void deleteFromBeginning();
+void deleteFromEnd();
+void deleteFromAny();
 struct node{
     int data;
     struct node *next;
@@ -19,7 +22,10 @@ int main() {
         printf("\n3.insert at beginning .");
         printf("\n4.insert at any position .");
         printf("\n5.insert at end .");
-        printf("\n6.Exit from creating node .");
+        printf("\n6.delete from the beginning .");
+        printf("\n7.delete from the end .");
+        printf("\n8.delete from any position .");
+        printf("\n9.Exit from creating node .");
         printf("\nEnter your choice : ");
         scanf("%d", &choice);
         switch (choice) {
@@ -39,6 +45,15 @@ int main() {
                 insertAtEnd();
                 break;
             case 6:
+                deleteFromBeginning();
+                break;
+            case 7:
+                deleteFromEnd();
+                break;
+            case 8:
+                deleteFromAny();
+                break;
+            case 9:
                 exit(0);
             default:
                 printf("Invalid input .");
@@ -54,7 +69,7 @@ void create(){
         printf("Underflow");
         return;
     }
-    printf("Enter the value for node : ");
+    printf("\nEnter the value for node : ");
     scanf("%d", &temp->data);
     if (start == NULL){
         start = temp;
@@ -109,12 +124,12 @@ void insertAtEnd(){
     }
     ptr->next = temp;
 }
-void insertAtAny(){
+void insertAtAny() {
     struct node *newNode, *ptr, *preptr;
-    newNode = (struct node*) malloc(sizeof(struct node));
-    if (newNode == NULL){
-        printf("UNDERFLOW");
-        return;
+    newNode = (struct node *)malloc(sizeof(struct node));
+    if (newNode == NULL) {
+        printf("MEMORY ALLOCATION FAILED");
+        exit(1);
     }
     printf("Enter the value for new node : ");
     scanf("%d", &newNode->data);
@@ -122,10 +137,62 @@ void insertAtAny(){
     printf("Enter the data at which you want to insert the value : ");
     scanf("%d", &data);
     ptr = start;
-    while (ptr->data != data){
+    preptr = NULL;
+    while (ptr != NULL && ptr->data != data) {
         preptr = ptr;
         ptr = ptr->next;
     }
-    newNode->next = preptr->next;
-    preptr->next = newNode;
+    if (ptr == NULL) {
+        printf("Value not found in the list\n");
+        free(newNode);
+        return;
+    }
+    newNode->next = ptr;
+    if (preptr == NULL)
+        start = newNode;
+    else
+        preptr->next = newNode;
+}
+
+
+void deleteFromBeginning(){
+    if (start == NULL){
+        printf("UNDERFLOW");
+        return;
+    }
+    struct node *temp;
+    temp = start;
+    start = start->next;
+    free(temp);
+}
+void deleteFromEnd(){
+    struct node *ptr, *preptr;
+    if (start == NULL){
+        printf("UNDERFLOW");
+        return;
+    }
+    ptr = start;
+    while (ptr->next != NULL){
+        preptr = ptr;
+        ptr = ptr->next;
+    }
+    preptr->next = NULL;
+    free(ptr);
+}
+void deleteFromAny(){
+    struct node *ptr, *preptr;
+    if (start == NULL){
+        printf("UNDERFLOW");
+        return;
+    }
+    printf("Enter the value which u want to delete : ");
+    int value;
+    scanf("%d", &value);
+    ptr = start;
+    while (ptr->data != value){
+        preptr = ptr;
+        ptr = ptr->next;
+    }
+    preptr->next = ptr->next;
+    free(ptr);
 }
